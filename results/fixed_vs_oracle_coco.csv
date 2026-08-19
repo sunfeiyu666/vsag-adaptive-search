@@ -1,0 +1,3 @@
+Dataset,Method,TopK,Target Recall,Coverage,Average Recall,Average efSearch,Latency (ms),QPS
+coco-t2i,Fixed,10,0.95,0.9055,0.9901499,800.0,0.4183285688995966,2390.4654722255195
+coco-t2i,Oracle,10,0.95,0.9183,1.0,166.17227172851562,0.4365791273260988,2290.5355235937773

@@ -1,0 +1,277 @@
+================================================================================
+FIXED vs ORACLE EXPERIMENT
+================================================================================
+TopK           = 10
+Target Recall  = 0.95
+Target Coverage = 0.9
+
+======================================================================
+Loading dataset:
+../data/coco-t2i-512-angular.hdf5
+======================================================================
+Base vectors: (113287, 512)
+Query vectors: (10000, 512)
+Ground truth: (10000, 100)
+
+Building HNSW index...
+Dimension: 512
+Space: cosine
+Index built
+
+======================================================================
+Searching Fixed baseline
+======================================================================
+Testing Fixed ef=10
+ef=10   Recall=0.5627 Coverage=4.1700% Latency=0.0184 ms QPS=54494.00
+Testing Fixed ef=20
+ef=20   Recall=0.7102 Coverage=12.5300% Latency=0.0276 ms QPS=36232.21
+Testing Fixed ef=50
+ef=50   Recall=0.8604 Coverage=35.5200% Latency=0.0514 ms QPS=19471.37
+Testing Fixed ef=100
+ef=100  Recall=0.9311 Coverage=57.3500% Latency=0.0911 ms QPS=10977.55
+Testing Fixed ef=200
+ef=200  Recall=0.9673 Coverage=75.1600% Latency=0.1412 ms QPS=7079.68
+Testing Fixed ef=300
+ef=300  Recall=0.9783 Coverage=82.0800% Latency=0.1931 ms QPS=5179.06
+Testing Fixed ef=500
+ef=500  Recall=0.9866 Coverage=87.8100% Latency=0.2865 ms QPS=3490.48
+Testing Fixed ef=800
+ef=800  Recall=0.9902 Coverage=90.5800% Latency=0.3952 ms QPS=2530.62
+
+Fixed baseline found: ef=800
+
+======================================================================
+Calculating Oracle
+======================================================================
+Oracle testing ef=10
+Currently solved: 417/10000
+Oracle testing ef=20
+Currently solved: 1256/10000
+Oracle testing ef=50
+Currently solved: 3559/10000
+Oracle testing ef=100
+Currently solved: 5755/10000
+Oracle testing ef=200
+Currently solved: 7542/10000
+Oracle testing ef=300
+Currently solved: 8238/10000
+Oracle testing ef=500
+Currently solved: 8813/10000
+Oracle testing ef=800
+Currently solved: 9092/10000
+Oracle testing ef=1000
+Currently solved: 9183/10000
+
+Oracle result:
+Coverage = 91.8300%
+Average optimal ef = 165.92
+Median optimal ef = 100.00
+
+Running Oracle search...
+
+
+====================================================================================================
+FINAL FIXED vs ORACLE COMPARISON
+====================================================================================================
+ Dataset Method  TopK  Target Recall  Coverage  Average Recall  Average efSearch  Latency (ms)       QPS
+COCO-T2I  Fixed    10         0.9500    0.9058          0.9902          800.0000        0.3952 2530.6220
+COCO-T2I Oracle    10         0.9500    0.9183          1.0000          165.9153        0.4228 2365.2305
+
+================================================================================
+FIXED vs ORACLE EXPERIMENT
+================================================================================
+TopK           = 10
+Target Recall  = 0.95
+Target Coverage = 0.9
+
+======================================================================
+Loading dataset:
+../data/sift-128-euclidean.hdf5
+======================================================================
+Base vectors: (1000000, 128)
+Query vectors: (10000, 128)
+Ground truth: (10000, 100)
+
+Building HNSW index...
+Dimension: 128
+Space: l2
+Index built
+
+======================================================================
+Searching Fixed baseline
+======================================================================
+Testing Fixed ef=10
+ef=10   Recall=0.7069 Coverage=16.8800% Latency=0.0125 ms QPS=80220.55
+Testing Fixed ef=20
+ef=20   Recall=0.8383 Coverage=36.0600% Latency=0.0177 ms QPS=56501.20
+Testing Fixed ef=50
+ef=50   Recall=0.9464 Coverage=68.0100% Latency=0.0340 ms QPS=29411.34
+Testing Fixed ef=100
+ef=100  Recall=0.9827 Coverage=86.7900% Latency=0.0608 ms QPS=16448.42
+Testing Fixed ef=200
+ef=200  Recall=0.9955 Coverage=95.9800% Latency=0.1148 ms QPS=8711.45
+
+Fixed baseline found: ef=200
+
+======================================================================
+Calculating Oracle
+======================================================================
+Oracle testing ef=10
+Currently solved: 1688/10000
+Oracle testing ef=20
+Currently solved: 3608/10000
+Oracle testing ef=50
+Currently solved: 6811/10000
+Oracle testing ef=100
+Currently solved: 8708/10000
+Oracle testing ef=200
+Currently solved: 9646/10000
+Oracle testing ef=300
+Currently solved: 9872/10000
+Oracle testing ef=500
+Currently solved: 9967/10000
+Oracle testing ef=800
+Currently solved: 9991/10000
+Oracle testing ef=1000
+Currently solved: 9996/10000
+
+Oracle result:
+Coverage = 99.9600%
+Average optimal ef = 73.25
+Median optimal ef = 50.00
+
+Running Oracle search...
+
+
+====================================================================================================
+FINAL FIXED vs ORACLE COMPARISON
+====================================================================================================
+           Dataset Method  TopK  Target Recall  Coverage  Average Recall  Average efSearch  Latency (ms)       QPS
+sift-128-euclidean  Fixed    10         0.9500    0.9598          0.9955          200.0000        0.1148 8711.4456
+sift-128-euclidean Oracle    10         0.9500    0.9996          1.0000           73.2523        0.2100 4761.1353
+
+======================================================================
+Loading dataset:
+../data/fashion-mnist-784-euclidean.hdf5
+======================================================================
+Base vectors: (60000, 784)
+Query vectors: (10000, 784)
+Ground truth: (10000, 100)
+
+Building HNSW index...
+Dimension: 784
+Space: l2
+Index built
+
+======================================================================
+Searching Fixed baseline
+======================================================================
+Testing Fixed ef=10
+ef=10   Recall=0.9318 Coverage=59.9200% Latency=0.0204 ms QPS=48937.59
+Testing Fixed ef=20
+ef=20   Recall=0.9794 Coverage=85.3900% Latency=0.0310 ms QPS=32291.48
+Testing Fixed ef=50
+ef=50   Recall=0.9964 Coverage=97.3100% Latency=0.0574 ms QPS=17423.98
+
+Fixed baseline found: ef=50
+
+======================================================================
+Calculating Oracle
+======================================================================
+Oracle testing ef=10
+Currently solved: 5992/10000
+Oracle testing ef=20
+Currently solved: 8539/10000
+Oracle testing ef=50
+Currently solved: 9731/10000
+Oracle testing ef=100
+Currently solved: 9916/10000
+Oracle testing ef=200
+Currently solved: 9963/10000
+Oracle testing ef=300
+Currently solved: 9976/10000
+Oracle testing ef=500
+Currently solved: 9990/10000
+Oracle testing ef=800
+Currently solved: 9990/10000
+Oracle testing ef=1000
+Currently solved: 9992/10000
+
+Oracle result:
+Coverage = 99.9200%
+Average optimal ef = 21.14
+Median optimal ef = 10.00
+
+Running Oracle search...
+
+
+====================================================================================================
+FINAL FIXED vs ORACLE COMPARISON
+====================================================================================================
+      Dataset Method  TopK  Target Recall  Coverage  Average Recall  Average efSearch  Latency (ms)        QPS
+fashion-mnist  Fixed    10         0.9500    0.9731          0.9964           50.0000        0.0574 17423.9814
+fashion-mnist Oracle    10         0.9500    0.9992          1.0000           21.1429        0.1087  9202.4999
+
+======================================================================
+Loading dataset:
+../data/nytimes-256-angular.hdf5
+======================================================================
+Base vectors: (290000, 256)
+Query vectors: (10000, 256)
+Ground truth: (10000, 100)
+
+Building HNSW index...
+Dimension: 256
+Space: cosine
+Index built
+
+======================================================================
+Searching Fixed baseline
+======================================================================
+Testing Fixed ef=10
+ef=10   Recall=0.5875 Coverage=32.7400% Latency=0.0184 ms QPS=54379.10
+Testing Fixed ef=20
+ef=20   Recall=0.7117 Coverage=46.9100% Latency=0.0265 ms QPS=37689.94
+Testing Fixed ef=50
+ef=50   Recall=0.8192 Coverage=59.1400% Latency=0.0527 ms QPS=18959.11
+Testing Fixed ef=100
+ef=100  Recall=0.8653 Coverage=63.9800% Latency=0.0925 ms QPS=10812.74
+Testing Fixed ef=200
+ef=200  Recall=0.8966 Coverage=66.6000% Latency=0.1662 ms QPS=6015.76
+Testing Fixed ef=300
+ef=300  Recall=0.9127 Coverage=68.9000% Latency=0.2385 ms QPS=4192.08
+Testing Fixed ef=500
+ef=500  Recall=0.9306 Coverage=71.5200% Latency=0.3880 ms QPS=2577.33
+Testing Fixed ef=800
+ef=800  Recall=0.9460 Coverage=74.1100% Latency=0.6113 ms QPS=1635.75
+Testing Fixed ef=1000
+ef=1000 Recall=0.9527 Coverage=75.7400% Latency=0.7583 ms QPS=1318.70
+
+WARNING: No Fixed efSearch can satisfy Coverage >= 90.00%
+
+======================================================================
+Calculating Oracle
+======================================================================
+Oracle testing ef=10
+Currently solved: 3274/10000
+Oracle testing ef=20
+Currently solved: 4796/10000
+Oracle testing ef=50
+Currently solved: 6114/10000
+Oracle testing ef=100
+Currently solved: 6671/10000
+Oracle testing ef=200
+Currently solved: 7022/10000
+Oracle testing ef=300
+Currently solved: 7265/10000
+Oracle testing ef=500
+Currently solved: 7588/10000
+Oracle testing ef=800
+Currently solved: 7887/10000
+Oracle testing ef=1000
+Currently solved: 8073/10000
+
+Oracle result:
+Coverage = 80.7300%
+Average optimal ef = 113.29
+Median optimal ef = 20.00

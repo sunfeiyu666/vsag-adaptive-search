@@ -1,0 +1,3 @@
+Dataset,Method,TopK,Target Recall,Coverage,Average Recall,Average efSearch,Latency (ms),QPS
+fashion-mnist,Fixed,10,0.95,0.9731,0.99640995,50.0,0.057392163999611515,17423.981434238463
+fashion-mnist,Oracle,10,0.95,0.9992,1.0,21.142913818359375,0.10866612409808381,9202.4999354664

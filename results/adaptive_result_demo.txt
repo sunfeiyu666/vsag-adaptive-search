@@ -1,0 +1,1004 @@
+======================================================================
+Loading Cohere dataset...
+======================================================================
+Loading base vectors: ../data/cohere_train.f32
+  Base vectors: (1000000, 768) (2.86 GiB)
+Loading query vectors: ../data/cohere_test.f32
+  Query vectors: (1000, 768)
+Loading ground truth: ../data/cohere_groundtruth.i32
+  Ground truth: (1000, 1000)
+
+Building HNSW index...
+  M=16, ef_construction=200
+Index built
+
+Total queries: 1000
+Calibration queries: 300
+Evaluation queries: 700
+
+======================================================================
+RUNNING ALL FIXED EF
+======================================================================
+Testing ef=50...
+  Coverage=0.7714, QPS=7534.81
+Testing ef=100...
+  Coverage=0.8643, QPS=4337.46
+Testing ef=200...
+  Coverage=0.9186, QPS=2357.80
+Testing ef=300...
+  Coverage=0.9386, QPS=1617.54
+Testing ef=400...
+  Coverage=0.9514, QPS=1229.93
+Testing ef=600...
+  Coverage=0.9671, QPS=854.46
+Testing ef=800...
+  Coverage=0.9714, QPS=660.97
+Testing ef=1000...
+  Coverage=0.9757, QPS=537.54
+Testing ef=1200...
+  Coverage=0.9771, QPS=458.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.9
+
+[Stage 1] Searching all queries with ef=100...
+  Searched 1000 queries
+  Average recall: 0.9666
+  Elapsed: 0.24s
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=400...
+  Average recall: 0.9159
+  Elapsed: 0.14s
+
+================================================================================
+FAIR COMPARISON (Same Coverage)
+================================================================================
+Target Coverage (Adaptive): 0.8986
+
+Method         Coverage     Recall     Avg ef    Latency(ms)          QPS
+--------------------------------------------------------------------------------
+Fixed            0.9186     0.9859        200         0.4241      2357.80
+Adaptive         0.8986     0.9874     118.86         0.5389      1855.49
+
+================================================================================
+FAIR IMPROVEMENT ANALYSIS (Same Coverage)
+================================================================================
+Same Coverage: 0.8986
+QPS Improvement: -21.30%
+EF Reduction: +40.57%
+Recall Change: +0.0016
+
+Results saved to: ../results/adaptive_two_stage_cohere_fair.csv
+(hnsw) sunfeiyu@LAPTOP-B6ALFQ2L:~/project/hnsw_experiment/scripts$ python adaptive_result_demo.py
+======================================================================
+Loading Cohere dataset...
+======================================================================
+Loading base vectors: ../data/cohere_train.f32
+  Base vectors: (1000000, 768) (2.86 GiB)
+Loading query vectors: ../data/cohere_test.f32
+  Query vectors: (1000, 768)
+Loading ground truth: ../data/cohere_groundtruth.i32
+  Ground truth: (1000, 1000)
+
+Building HNSW index...
+  M=16, ef_construction=200
+Index built
+
+Total queries: 1000
+Calibration queries: 300
+Evaluation queries: 700
+
+======================================================================
+RUNNING ALL FIXED EF
+======================================================================
+Testing ef=50...
+  Coverage=0.7757, QPS=7547.51
+Testing ef=100...
+  Coverage=0.8643, QPS=4248.21
+Testing ef=200...
+  Coverage=0.9171, QPS=2255.83
+Testing ef=300...
+  Coverage=0.9400, QPS=1468.73
+Testing ef=400...
+  Coverage=0.9543, QPS=1162.39
+Testing ef=600...
+  Coverage=0.9686, QPS=792.19
+Testing ef=800...
+  Coverage=0.9714, QPS=591.16
+Testing ef=1000...
+  Coverage=0.9757, QPS=515.54
+Testing ef=1200...
+  Coverage=0.9771, QPS=432.09
+
+======================================================================
+SEARCHING OPTIMAL ADAPTIVE PARAMETERS
+======================================================================
+Target Coverage: 0.9
+EF_CHEAP options: [50, 100, 150]
+EF_EXPENSIVE options: [400, 600, 800]
+Threshold options: [0.85, 0.88, 0.9, 0.92, 0.95]
+
+Testing 1/45: ef_cheap=50, ef_expensive=400, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=400...
+  Average recall: 0.9524
+  Elapsed: 0.09s
+  ✗ Coverage=0.8629 < 0.9, skipped
+
+Testing 2/45: ef_cheap=50, ef_expensive=400, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=400...
+  Average recall: 0.9524
+  Elapsed: 0.08s
+  ✗ Coverage=0.8629 < 0.9, skipped
+
+Testing 3/45: ef_cheap=50, ef_expensive=400, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=400...
+  Average recall: 0.9524
+  Elapsed: 0.08s
+  ✗ Coverage=0.8629 < 0.9, skipped
+
+Testing 4/45: ef_cheap=50, ef_expensive=400, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 543 queries (77.6%)
+  Continue to Stage 2: 157 queries (22.4%)
+
+[Stage 2] Searching 157 queries with ef=400...
+  Average recall: 0.9688
+  Elapsed: 0.15s
+  ✓ Coverage=0.9543 >= 0.9, QPS=2489.03
+
+Testing 5/45: ef_cheap=50, ef_expensive=400, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 543 queries (77.6%)
+  Continue to Stage 2: 157 queries (22.4%)
+
+[Stage 2] Searching 157 queries with ef=400...
+  Average recall: 0.9688
+  Elapsed: 0.15s
+  ✓ Coverage=0.9543 >= 0.9, QPS=2461.57
+
+Testing 6/45: ef_cheap=50, ef_expensive=600, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=600...
+  Average recall: 0.9762
+  Elapsed: 0.12s
+  ✗ Coverage=0.8743 < 0.9, skipped
+
+Testing 7/45: ef_cheap=50, ef_expensive=600, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=600...
+  Average recall: 0.9762
+  Elapsed: 0.12s
+  ✗ Coverage=0.8743 < 0.9, skipped
+
+Testing 8/45: ef_cheap=50, ef_expensive=600, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=600...
+  Average recall: 0.9762
+  Elapsed: 0.12s
+  ✗ Coverage=0.8743 < 0.9, skipped
+
+Testing 9/45: ef_cheap=50, ef_expensive=600, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 543 queries (77.6%)
+  Continue to Stage 2: 157 queries (22.4%)
+
+[Stage 2] Searching 157 queries with ef=600...
+  Average recall: 0.9828
+  Elapsed: 0.21s
+  ✓ Coverage=0.9686 >= 0.9, QPS=2035.46
+
+Testing 10/45: ef_cheap=50, ef_expensive=600, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 543 queries (77.6%)
+  Continue to Stage 2: 157 queries (22.4%)
+
+[Stage 2] Searching 157 queries with ef=600...
+  Average recall: 0.9828
+  Elapsed: 0.22s
+  ✓ Coverage=0.9686 >= 0.9, QPS=2003.05
+
+Testing 11/45: ef_cheap=50, ef_expensive=800, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=800...
+  Average recall: 0.9786
+  Elapsed: 0.15s
+  ✗ Coverage=0.8757 < 0.9, skipped
+
+Testing 12/45: ef_cheap=50, ef_expensive=800, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=800...
+  Average recall: 0.9786
+  Elapsed: 0.15s
+  ✗ Coverage=0.8757 < 0.9, skipped
+
+Testing 13/45: ef_cheap=50, ef_expensive=800, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 616 queries (88.0%)
+  Continue to Stage 2: 84 queries (12.0%)
+
+[Stage 2] Searching 84 queries with ef=800...
+  Average recall: 0.9786
+  Elapsed: 0.15s
+  ✗ Coverage=0.8757 < 0.9, skipped
+
+Testing 14/45: ef_cheap=50, ef_expensive=800, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 543 queries (77.6%)
+  Continue to Stage 2: 157 queries (22.4%)
+
+[Stage 2] Searching 157 queries with ef=800...
+  Average recall: 0.9847
+  Elapsed: 0.29s
+  ✓ Coverage=0.9714 >= 0.9, QPS=1622.45
+
+Testing 15/45: ef_cheap=50, ef_expensive=800, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=50 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 543 queries (77.6%)
+  Continue to Stage 2: 157 queries (22.4%)
+
+[Stage 2] Searching 157 queries with ef=800...
+  Average recall: 0.9847
+  Elapsed: 0.27s
+  ✓ Coverage=0.9714 >= 0.9, QPS=1729.27
+
+Testing 16/45: ef_cheap=100, ef_expensive=400, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=400...
+  Average recall: 0.9182
+  Elapsed: 0.14s
+  ✓ Coverage=0.9000 >= 0.9, QPS=1865.89
+
+Testing 17/45: ef_cheap=100, ef_expensive=400, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=400...
+  Average recall: 0.9182
+  Elapsed: 0.14s
+  ✓ Coverage=0.9000 >= 0.9, QPS=1848.82
+
+Testing 18/45: ef_cheap=100, ef_expensive=400, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=400...
+  Average recall: 0.9182
+  Elapsed: 0.14s
+  ✓ Coverage=0.9000 >= 0.9, QPS=1829.50
+
+Testing 19/45: ef_cheap=100, ef_expensive=400, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 605 queries (86.4%)
+  Continue to Stage 2: 95 queries (13.6%)
+
+[Stage 2] Searching 95 queries with ef=400...
+  Average recall: 0.9484
+  Elapsed: 0.09s
+  ✓ Coverage=0.9543 >= 0.9, QPS=2108.55
+
+Testing 20/45: ef_cheap=100, ef_expensive=400, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 605 queries (86.4%)
+  Continue to Stage 2: 95 queries (13.6%)
+
+[Stage 2] Searching 95 queries with ef=400...
+  Average recall: 0.9484
+  Elapsed: 0.10s
+  ✓ Coverage=0.9543 >= 0.9, QPS=2000.72
+
+Testing 21/45: ef_cheap=100, ef_expensive=600, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=600...
+  Average recall: 0.9636
+  Elapsed: 0.20s
+  ✓ Coverage=0.9114 >= 0.9, QPS=1575.78
+
+Testing 22/45: ef_cheap=100, ef_expensive=600, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=600...
+  Average recall: 0.9636
+  Elapsed: 0.21s
+  ✓ Coverage=0.9114 >= 0.9, QPS=1543.52
+
+Testing 23/45: ef_cheap=100, ef_expensive=600, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=600...
+  Average recall: 0.9636
+  Elapsed: 0.20s
+  ✓ Coverage=0.9114 >= 0.9, QPS=1562.79
+
+Testing 24/45: ef_cheap=100, ef_expensive=600, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 605 queries (86.4%)
+  Continue to Stage 2: 95 queries (13.6%)
+
+[Stage 2] Searching 95 queries with ef=600...
+  Average recall: 0.9716
+  Elapsed: 0.14s
+  ✓ Coverage=0.9686 >= 0.9, QPS=1673.36
+
+Testing 25/45: ef_cheap=100, ef_expensive=600, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 605 queries (86.4%)
+  Continue to Stage 2: 95 queries (13.6%)
+
+[Stage 2] Searching 95 queries with ef=600...
+  Average recall: 0.9716
+  Elapsed: 0.16s
+  ✓ Coverage=0.9686 >= 0.9, QPS=1663.53
+
+Testing 26/45: ef_cheap=100, ef_expensive=800, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=800...
+  Average recall: 0.9682
+  Elapsed: 0.25s
+  ✓ Coverage=0.9129 >= 0.9, QPS=1337.46
+
+Testing 27/45: ef_cheap=100, ef_expensive=800, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=800...
+  Average recall: 0.9682
+  Elapsed: 0.25s
+  ✓ Coverage=0.9129 >= 0.9, QPS=1444.87
+
+Testing 28/45: ef_cheap=100, ef_expensive=800, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 656 queries (93.7%)
+  Continue to Stage 2: 44 queries (6.3%)
+
+[Stage 2] Searching 44 queries with ef=800...
+  Average recall: 0.9682
+  Elapsed: 0.26s
+  ✓ Coverage=0.9129 >= 0.9, QPS=1418.14
+
+Testing 29/45: ef_cheap=100, ef_expensive=800, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 605 queries (86.4%)
+  Continue to Stage 2: 95 queries (13.6%)
+
+[Stage 2] Searching 95 queries with ef=800...
+  Average recall: 0.9747
+  Elapsed: 0.17s
+  ✓ Coverage=0.9714 >= 0.9, QPS=1724.42
+
+Testing 30/45: ef_cheap=100, ef_expensive=800, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=100 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 605 queries (86.4%)
+  Continue to Stage 2: 95 queries (13.6%)
+
+[Stage 2] Searching 95 queries with ef=800...
+  Average recall: 0.9747
+  Elapsed: 0.18s
+  ✓ Coverage=0.9714 >= 0.9, QPS=1635.09
+
+Testing 31/45: ef_cheap=150, ef_expensive=400, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=400...
+  Average recall: 0.8731
+  Elapsed: 0.08s
+  ✓ Coverage=0.9143 >= 0.9, QPS=1667.56
+
+Testing 32/45: ef_cheap=150, ef_expensive=400, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=400...
+  Average recall: 0.8731
+  Elapsed: 0.08s
+  ✓ Coverage=0.9143 >= 0.9, QPS=1668.35
+
+Testing 33/45: ef_cheap=150, ef_expensive=400, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=400...
+  Average recall: 0.8731
+  Elapsed: 0.08s
+  ✓ Coverage=0.9143 >= 0.9, QPS=1670.10
+
+Testing 34/45: ef_cheap=150, ef_expensive=400, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 630 queries (90.0%)
+  Continue to Stage 2: 70 queries (10.0%)
+
+[Stage 2] Searching 70 queries with ef=400...
+  Average recall: 0.9300
+  Elapsed: 0.08s
+  ✓ Coverage=0.9543 >= 0.9, QPS=1707.40
+
+Testing 35/45: ef_cheap=150, ef_expensive=400, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=400 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 630 queries (90.0%)
+  Continue to Stage 2: 70 queries (10.0%)
+
+[Stage 2] Searching 70 queries with ef=400...
+  Average recall: 0.9300
+  Elapsed: 0.08s
+  ✓ Coverage=0.9543 >= 0.9, QPS=1503.92
+
+Testing 36/45: ef_cheap=150, ef_expensive=600, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=600...
+  Average recall: 0.9500
+  Elapsed: 0.13s
+  ✓ Coverage=0.9257 >= 0.9, QPS=1413.84
+
+Testing 37/45: ef_cheap=150, ef_expensive=600, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=600...
+  Average recall: 0.9500
+  Elapsed: 0.12s
+  ✓ Coverage=0.9257 >= 0.9, QPS=1411.58
+
+Testing 38/45: ef_cheap=150, ef_expensive=600, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=600...
+  Average recall: 0.9500
+  Elapsed: 0.12s
+  ✓ Coverage=0.9257 >= 0.9, QPS=1537.95
+
+Testing 39/45: ef_cheap=150, ef_expensive=600, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 630 queries (90.0%)
+  Continue to Stage 2: 70 queries (10.0%)
+
+[Stage 2] Searching 70 queries with ef=600...
+  Average recall: 0.9614
+  Elapsed: 0.10s
+  ✓ Coverage=0.9686 >= 0.9, QPS=1585.05
+
+Testing 40/45: ef_cheap=150, ef_expensive=600, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=600 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 630 queries (90.0%)
+  Continue to Stage 2: 70 queries (10.0%)
+
+[Stage 2] Searching 70 queries with ef=600...
+  Average recall: 0.9614
+  Elapsed: 0.11s
+  ✓ Coverage=0.9686 >= 0.9, QPS=1540.09
+
+Testing 41/45: ef_cheap=150, ef_expensive=800, threshold=0.85
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.85
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=800...
+  Average recall: 0.9577
+  Elapsed: 0.15s
+  ✓ Coverage=0.9271 >= 0.9, QPS=1330.85
+
+Testing 42/45: ef_cheap=150, ef_expensive=800, threshold=0.88
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.88
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=800...
+  Average recall: 0.9577
+  Elapsed: 0.15s
+  ✓ Coverage=0.9271 >= 0.9, QPS=1392.06
+
+Testing 43/45: ef_cheap=150, ef_expensive=800, threshold=0.9
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.9
+
+
+Decision:
+  Stop in Stage 1: 674 queries (96.3%)
+  Continue to Stage 2: 26 queries (3.7%)
+
+[Stage 2] Searching 26 queries with ef=800...
+  Average recall: 0.9577
+  Elapsed: 0.15s
+  ✓ Coverage=0.9271 >= 0.9, QPS=1401.59
+
+Testing 44/45: ef_cheap=150, ef_expensive=800, threshold=0.92
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.92
+
+
+Decision:
+  Stop in Stage 1: 630 queries (90.0%)
+  Continue to Stage 2: 70 queries (10.0%)
+
+[Stage 2] Searching 70 queries with ef=800...
+  Average recall: 0.9657
+  Elapsed: 0.12s
+  ✓ Coverage=0.9714 >= 0.9, QPS=1495.65
+
+Testing 45/45: ef_cheap=150, ef_expensive=800, threshold=0.95
+
+======================================================================
+TWO-STAGE ADAPTIVE SEARCH
+======================================================================
+Stage 1: ef=150 (cheap)
+Stage 2: ef=800 (expensive)
+Prediction threshold: recall >= 0.95
+
+
+Decision:
+  Stop in Stage 1: 630 queries (90.0%)
+  Continue to Stage 2: 70 queries (10.0%)
+
+[Stage 2] Searching 70 queries with ef=800...
+  Average recall: 0.9657
+  Elapsed: 0.13s
+  ✓ Coverage=0.9714 >= 0.9, QPS=1484.13
+
+✓ Best adaptive config found:
+  ef_cheap=50, ef_expensive=400, threshold=0.92
+  Coverage=0.9543, QPS=2489.03
+
+================================================================================
+FAIR COMPARISON (Same Coverage)
+================================================================================
+Target Coverage: 0.9000
+
+Method         Coverage     Recall     Avg ef    Latency(ms)          QPS
+--------------------------------------------------------------------------------
+Fixed            0.9171     0.9839     200.00         0.4433      2255.83
+Adaptive         0.9543     0.9930     128.50         0.4018      2489.03
+
+================================================================================
+FAIR IMPROVEMENT ANALYSIS
+================================================================================
+Same Coverage: 0.9000
+QPS Improvement: +10.34%
+EF Reduction: +35.75%
+Recall Change: +0.0091

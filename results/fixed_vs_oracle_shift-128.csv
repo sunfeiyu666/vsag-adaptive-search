@@ -1,0 +1,3 @@
+Dataset,Method,TopK,Target Recall,Coverage,Average Recall,Average efSearch,Latency (ms),QPS
+sift-128-euclidean,Fixed,10,0.95,0.9598,0.99555,200.0,0.11479151050007202,8711.445608160828
+sift-128-euclidean,Oracle,10,0.95,0.9996,1.0,73.25230407714844,0.21003393749870425,4761.135328456951

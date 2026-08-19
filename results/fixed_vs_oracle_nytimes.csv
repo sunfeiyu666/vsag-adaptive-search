@@ -1,0 +1,2 @@
+Dataset,Method,TopK,Target Recall,Coverage,Average Recall,Average efSearch,Latency (ms),QPS
+nytimes-256,Oracle,10,0.95,0.8073,1.0,113.28874,0.3752156659221359,2665.1339238258734
