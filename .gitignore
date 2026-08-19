@@ -1,5 +1,6 @@
-# 大型数据集（超过 GitHub 100MB 单文件限制，不上传）
-data/
+# 大型数据集（超过 GitHub 100MB 单文件限制，不上传；仅保留 data/README.md 数据集说明）
+data/*
+!data/README.md
 
 # Python
 __pycache__/
